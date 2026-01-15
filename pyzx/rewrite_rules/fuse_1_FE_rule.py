@@ -55,21 +55,27 @@ from pyzx.rewrite_rules import (
     fuse as _fuse,
 )
 from pyzx.utils import is_pauli, VertexType
+from pyzx.rewrite_rules.fuse_rule import check_fuse
 
 
-def check_fuse_1_FE(g: BaseGraph[VT, ET], v: VT) -> bool:
+def check_fuse_1_FE(g: BaseGraph[VT, ET], v: VT, w: VT) -> bool:
     neighs = g.neighbors(v)
-    return len(neighs) == 1 and g.type(neighs[0]) == g.type(v) and is_pauli(g.phase(v))
+    return len(neighs) == 1 and check_fuse(g, v, w) and is_pauli(g.phase(v))
 
 
-def fuse_1_FE(g: BaseGraph[VT, ET], v: VT) -> bool:
-    if not check_fuse_1_FE(g, v):
+#def check_fuse_1_FE(g: BaseGraph[VT, ET], v: VT) -> bool:
+    #neighs = g.neighbors(v)
+    #return len(neighs) == 1 and g.type(neighs[0]) == g.type(v) and is_pauli(g.phase(v))
+
+
+def fuse_1_FE(g: BaseGraph[VT, ET], v: VT, w: VT) -> bool:
+    if not check_fuse_1_FE(g, v, w):
         return False
-    return unsafe_fuse_1_FE(g, v)
+    return unsafe_fuse_1_FE(g, v, w)
 
 
-def unsafe_fuse_1_FE(g: BaseGraph[VT, ET], v: VT) -> bool:
-    if not check_fuse_1_FE(g, v):
+def unsafe_fuse_1_FE(g: BaseGraph[VT, ET], v: VT, w: VT) -> bool:
+    if not check_fuse_1_FE(g, v, w):
         return False
     [v2] = g.neighbors(v)
     return _fuse(g, v, v2)
