@@ -86,7 +86,7 @@ def unsafe_pauli_push(g: BaseGraph[VT,ET], v:VT, w:VT) -> bool:
 
     if g.vertex_degree(w) == 2:
         rem_verts.append(w)
-        l = list(g.neighbors(w))
+        l = g.neighbors(w)
         l.remove(v)
         v2 = l[0]
         et1 = g.edge_type(g.edge(v,w))

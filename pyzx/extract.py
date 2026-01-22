@@ -509,7 +509,7 @@ def clean_frontier(g: BaseGraph[VT, ET], c: Circuit, frontier: List[VT],
     # And now on to CZ gates
     cz_mat = Mat2([[0 for i in range(len(outputs))] for j in range(len(outputs))])
     for v in frontier:
-        for w in list(g.neighbors(v)):
+        for w in g.neighbors(v):
             if w in frontier:
                 cz_mat.data[qubit_map[v]][qubit_map[w]] = 1
                 cz_mat.data[qubit_map[w]][qubit_map[v]] = 1
@@ -628,13 +628,13 @@ def extract_circuit(
 
     for v in g.vertices():
         if g.vertex_degree(v) == 1 and v not in inputs and v not in outputs:
-            n = list(g.neighbors(v))[0]
+            n = g.neighbors(v)[0]
             gadgets[n] = v
 
     qubit_map: Dict[VT,int] = dict()
     frontier = []
     for i, o in enumerate(outputs):
-        v = list(g.neighbors(o))[0]
+        v = g.neighbors(o)[0]
         if v in inputs:
             continue
         frontier.append(v)
@@ -732,7 +732,7 @@ def extract_simple(g: BaseGraph[VT, ET], up_to_perm: bool = True) -> Circuit:
         for q, o in enumerate(outputs):
             if g.vertex_degree(o) != 1:
                 raise ValueError("Bad output degree")
-            v = list(g.neighbors(o))[0]
+            v = g.neighbors(o)[0]
             e = g.edge(o, v)
             
             if g.edge_type(e) == EdgeType.HADAMARD:
@@ -740,7 +740,7 @@ def extract_simple(g: BaseGraph[VT, ET], up_to_perm: bool = True) -> Circuit:
                 circ.prepend_gate(HAD(q))
                 g.set_edge_type(e, EdgeType.SIMPLE)
             elif (g.type(v) == VertexType.Z or g.type(v) == VertexType.X) and g.vertex_degree(v) == 2:
-                ns = list(g.neighbors(v))
+                ns = g.neighbors(v)
                 w = ns[0] if ns[1] == o else ns[1]
                 progress = True
 
@@ -757,8 +757,8 @@ def extract_simple(g: BaseGraph[VT, ET], up_to_perm: bool = True) -> Circuit:
         for q1,o1 in enumerate(outputs):
             for q2,o2 in enumerate(outputs):
                 if o1 == o2: continue
-                v1 = list(g.neighbors(o1))[0]
-                v2 = list(g.neighbors(o2))[0]
+                v1 = g.neighbors(o1)[0]
+                v2 = g.neighbors(o2)[0]
                 if g.connected(v1,v2):
                     if ((g.type(v1) == g.type(v2) and g.edge_type(g.edge(v1,v2)) == EdgeType.SIMPLE) or
                         (g.type(v1) != g.type(v2) and g.edge_type(g.edge(v1,v2)) == EdgeType.HADAMARD)):
@@ -798,7 +798,7 @@ def graph_to_swaps(g: BaseGraph[VT, ET], no_swaps: bool = False) -> Circuit:
     c = Circuit(len(inputs))
 
     for q,v in enumerate(outputs): # check for a last layer of Hadamards, and see if swap gates need to be applied.
-        inp = list(g.neighbors(v))[0]
+        inp = g.neighbors(v)[0]
         if inp not in inputs: 
             raise TypeError("Algorithm failed: Graph is not fully reduced")
             return c
@@ -829,8 +829,8 @@ def extract_clifford_normal_form(g: BaseGraph[VT,ET]) -> Circuit:
     
     inputs = list(g.inputs())
     outputs = list(g.outputs())
-    v_inputs = [list(g.neighbors(i))[0] for i in inputs] # input vertices should have a unique spider neighbor
-    v_outputs = [list(g.neighbors(o))[0] for o in outputs] # input vertices should have a unique spider neighbor
+    v_inputs = [g.neighbors(i)[0] for i in inputs] # input vertices should have a unique spider neighbor
+    v_outputs = [g.neighbors(o)[0] for o in outputs] # input vertices should have a unique spider neighbor
 
     if len(inputs) != len(outputs):
         raise ValueError("Number of input wires does not match number of output wires. Currently only unitary Clifford extraction is supported.")
@@ -1347,13 +1347,13 @@ def lookahead_extract_base(
     outputs = g.outputs()
     for v in g.vertices():
         if g.vertex_degree(v) == 1 and v not in inputs and v not in outputs:
-            n = list(g.neighbors(v))[0]
+            n = g.neighbors(v)[0]
             gadgets[n] = v
 
     qubit_map: Dict[VT, int] = dict()
     frontier = []
     for i, o in enumerate(outputs):
-        v = list(g.neighbors(o))[0]
+        v = g.neighbors(o)[0]
         if v in inputs:
             continue
         frontier.append(v)

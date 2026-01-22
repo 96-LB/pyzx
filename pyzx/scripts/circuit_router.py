@@ -211,7 +211,7 @@ def simple_extract_no_gadgets(
         if v in g.inputs or v in g.outputs:
             continue
         elif all(
-            w in g.inputs or w in g.outputs or len(list(g.neighbours(w))) != 1
+            w in g.inputs or w in g.outputs or len(g.neighbours(w)) != 1
             for w in g.neighbours(v)
         ):  # regular vertex
             nodes.append(v)
@@ -302,7 +302,7 @@ def simple_extract_no_gadgets(
             else:
                 g.set_row(good_verts[v], leftrow + 1)
                 g.set_qubit(good_verts[v], qs[v])
-                if len(list(g.neighbours(v))) > 2:  # Gadgets are still connected to it
+                if len(g.neighbours(v)) > 2:  # Gadgets are still connected to it
                     w = add_phase_gate(qs[v], 0)
                     processed_targets[v] = w
         leftrow += 1
@@ -325,7 +325,7 @@ def simple_extract_no_gadgets(
         connectivity_from_biadj(g, m, right, left)  # Removes connections from g
 
         for i, w in enumerate(g.outputs):
-            n = list(g.neighbours(w))[0]
+            n = g.neighbours(w)[0]
             et = g.edge_type(g.edge(n, w))
             v = h.add_vertex(0, i, depth)
             h.outputs.append(v)
@@ -336,7 +336,7 @@ def simple_extract_no_gadgets(
         final_placement = [g.qubit(r) for r in right]
         for q, l in enumerate(left):
             n = right[q]
-            r = [v for v in g.outputs if n == list(g.neighbours(v))[0]][0]
+            r = [v for v in g.outputs if n == g.neighbours(v)[0]][0]
             et = g.edge_type(g.edge(n, r))
             v = h.add_vertex(0, q, depth)
             h.outputs.append(v)
@@ -352,7 +352,7 @@ def preprocess_graph(g):
             r = g.row(v)
             g.set_row(v, r + 2)
     for input in g.inputs:
-        n = list(g.neighbours(input))[0]
+        n = g.neighbours(input)[0]
         q = g.qubit(input)
         edge = g.edge(input, n)
         etype = g.edge_type(edge)
@@ -366,7 +366,7 @@ def preprocess_graph(g):
         g.add_edge((v1, n), edgetype=2)
         g.remove_edge(edge)
     for output in g.outputs:
-        n = list(g.neighbours(output))[0]
+        n = g.neighbours(output)[0]
         edge = g.edge(output, n)
         etype = g.edge_type(edge)
         r = g.row(output)

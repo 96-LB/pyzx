@@ -176,7 +176,7 @@ def lc_cong2(g, v):
         g.add_edge((v1, v2), edgetype=EdgeType.HADAMARD)
         g.add_edge((v2, v), edgetype=EdgeType.HADAMARD)
         g.set_phase(v, Fraction(-1,2))
-    # apply_rule(g, lcomp, [[v, list(g.neighbors(v))]])
+    # apply_rule(g, lcomp, [[v, g.neighbors(v)]])
 
 
 
@@ -220,8 +220,8 @@ def pivot_cong(g, v1, v2):
     """
 
     # get the three subsets
-    nhd1 = list(g.neighbors(v1))
-    nhd2 = list(g.neighbors(v2))
+    nhd1 = g.neighbors(v1)
+    nhd2 = g.neighbors(v2)
     assert(all([g.type(v) in [VertexType.Z, VertexType.BOUNDARY] for v in nhd1]))
     assert(all([g.type(v) in [VertexType.Z, VertexType.BOUNDARY] for v in nhd2]))
     vs1 = [v for v in nhd1 if g.type(v) == VertexType.Z]

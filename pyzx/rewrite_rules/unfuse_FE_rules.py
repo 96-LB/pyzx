@@ -174,7 +174,7 @@ def _unsafe_unfuse_spider(
 ) -> bool:
     """A generic function to unfuse a spider into a polygon of new spiders."""
     v_type = g.type(v)
-    neighs = list(g.neighbors(v))
+    neighs = g.neighbors(v)
     original_edge_types = {n: g.edge_type(g.edge(v, n)) for n in neighs}
     q, r = g.qubit(v), g.row(v)
 
@@ -279,7 +279,7 @@ def _unfuse_2n_spider_core(g: BaseGraph[VT, ET], v: VT, w: Optional[int] = None)
             Only the first w-1 pairs will have a full parity check gadget created between them.
     """
     v_type = g.type(v)
-    neighs = list(g.neighbors(v))
+    neighs = g.neighbors(v)
 
     # 1. Split neighbors into two deterministic groups (left and right)
     group1, group2 = _split_neighbors_into_groups(g, neighs)

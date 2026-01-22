@@ -54,7 +54,7 @@ def determine_ordering(g: BaseGraph[int, Tuple[int, int]]) -> GraphOrdering:
     <Z boundaries><0/pi-phase spiders><(minus) half-pi-phase spiders>.
     """
     boundaries = [v for v in g.vertices() if g.type(v) == VertexType.BOUNDARY]
-    z_boundaries = {list(g.neighbors(b))[0]: b for b in boundaries}
+    z_boundaries = {g.neigbors(b)[0]: b for b in boundaries}
     internal_spiders = list(g.vertex_set().difference(boundaries).difference(z_boundaries.keys()))
     pi_2_spiders = list(filter(lambda _v: g.phase(_v).denominator == 2, internal_spiders))
 

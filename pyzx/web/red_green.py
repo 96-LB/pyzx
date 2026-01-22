@@ -189,13 +189,13 @@ def _ensure_red_green(g: BaseGraph[int, Tuple[int, int]]) -> Iterable[int]:
     # Ensure boundaries are not connected to a red spider
     boundaries = [v for v in g.vertices() if g.type(v) == VertexType.BOUNDARY]
     for boundary in boundaries:
-        neighbour = list(g.neighbors(boundary))[0]
+        neighbour = g.neighbors(boundary)[0]
         if g.type(neighbour) == VertexType.X:
             new_nodes.append(_place_node_between(g, VertexType.Z, boundary, neighbour))
 
     # Ensure boundaries are not connected to green spiders with nonzero phase or more than one boundary connection
     for boundary in boundaries:
-        neighbour = list(g.neighbors(boundary))[0]
+        neighbour = g.neighbors(boundary)[0]
         neighbour_boundaries = [v for v in g.neighbors(neighbour) if g.type(v) == VertexType.BOUNDARY]
         if g.phase(neighbour) != 0 or len(neighbour_boundaries) > 1:
             new_x = _place_node_between(g, VertexType.X, boundary, neighbour)

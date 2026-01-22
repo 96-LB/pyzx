@@ -50,7 +50,7 @@ def sqasm(s: str, simplify=True) -> BaseGraph:
             for q in range(sp[0],sp[0]+sp[1]):
                 if r[0] != 'Z':
                     v = inputs[q]
-                    v1 = list(g.neighbors(v))
+                    v1 = g.neighbors(v)
                     if len(v1) > 0 and g.type(v1[0]) != VertexType.BOUNDARY:
                         g.set_type(v, g.type(v1[0]))
                     else:
@@ -60,7 +60,7 @@ def sqasm(s: str, simplify=True) -> BaseGraph:
 
                 if r[0] != 'A':
                     v = outputs[q]
-                    v1 = list(g.neighbors(v))
+                    v1 = g.neighbors(v)
                     if len(v1) > 0 and g.type(v1[0]) != VertexType.BOUNDARY:
                         g.set_type(v, g.type(v1[0]))
                     else:

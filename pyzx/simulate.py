@@ -233,7 +233,7 @@ def calculate_path_sum(g: BaseGraph[VT,ET]) -> complex:
         if v in variable_dict: continue
         if not phases[v]: continue #It is the axle of a phase gadget, ignore it
         if g.vertex_degree(v) == 1: # Probably phase gadget
-            w = list(g.neighbors(v))[0]
+            w = g.neighbors(v)[0]
             if not phases[w]: # It is indeed a phase gadget
                 targets = set()
                 for t in g.neighbors(w):
@@ -338,7 +338,7 @@ def replace_magic_states(g: BaseGraph[VT,ET], pick_random:Any=False) -> SumGraph
         ### begin AK changes ....
         deg = g.vertex_degree(v)
         if g.vertex_degree(v) == 1:
-            w = list(g.neighbors(v))[0]
+            w = g.neighbors(v)[0]
             if g.type(w) == VertexType.Z:
                 gadgets.append(v)
                 deg = g.vertex_degree(w)-1
@@ -712,7 +712,7 @@ def apply_cat3(g: BaseGraph[VT, ET], vertex: VT) -> SumGraph:
     # Check the decomposition is applicable
     check_catn(g, vertex, 3)
     # Generate the terms of the decomposition
-    neighbors = list(g.neighbors(vertex))
+    neighbors = g.neighbors(vertex)
     pi_case = g.phase(vertex) == 1
     g_A = gen_catlike_term(g, neighbors,
                            0, Fraction(-1, 2), 0,
@@ -736,7 +736,7 @@ def apply_cat4(g: BaseGraph[VT, ET], vertex: VT) -> SumGraph:
     # Check the decomposition is applicable
     check_catn(g, vertex, 4)
     # Generate the terms of the decomposition
-    neighbors = list(g.neighbors(vertex))
+    neighbors = g.neighbors(vertex)
     pi_case = g.phase(vertex) == 1
     g_A = gen_catlike_term(g, neighbors,
                            0, Fraction(-1, 2), 0,
@@ -760,7 +760,7 @@ def apply_cat5(g: BaseGraph[VT, ET], vertex: VT) -> SumGraph:
     # Check the decomposition is applicable
     check_catn(g, vertex, 5)
     # Generate the terms of the decomposition
-    neighbors = list(g.neighbors(vertex))
+    neighbors = g.neighbors(vertex)
     pi_case = g.phase(vertex) == 1
     g_A = gen_catlike_term(g, neighbors,
                            0, Fraction(-1, 2), 0,
@@ -789,7 +789,7 @@ def apply_cat6(g: BaseGraph[VT, ET], vertex: VT) -> SumGraph:
     # Check the decomposition is applicable
     check_catn(g, vertex, 6)
     # Generate the terms of the decomposition
-    verts = list(g.neighbors(vertex))
+    verts = g.neighbors(vertex)
     pi_case = g.phase(vertex) == 1
     g_A = gen_catlike_term(g, verts,
                            0, Fraction(-1, 2), 0,

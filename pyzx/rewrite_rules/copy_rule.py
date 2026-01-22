@@ -46,7 +46,7 @@ def check_copy(
     if g.phase(v) not in (0,1) or g.type(v) == VertexType.BOUNDARY or g.vertex_degree(v) != 1:
         return False
 
-    w = list(g.neighbors(v))[0]
+    w = g.neighbors(v)[0]
 
     tv = g.type(v)
     if tv == VertexType.H_BOX: tv = VertexType.Z # v is arity 1, so we can treat it as a Z spider
@@ -136,7 +136,7 @@ def unsafe_copy(
     rem = []
     types = g.types()
 
-    w = list(g.neighbors(v))[0]
+    w = g.neighbors(v)[0]
     a = g.phases()[v]
     alpha = g.phases()[w]
     neigh_edges = [e for e in g.incident_edges(w) if v not in g.edge_st(e)]

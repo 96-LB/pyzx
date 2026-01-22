@@ -69,8 +69,8 @@ def match_phase_gadgets(g: BaseGraph[VT,ET], vertices:Optional[List[VT]]=None) -
             non_clifford = True
         else:
             non_clifford = phases[v] != 0 and getattr(phases[v], 'denominator', 1) > 2
-        if non_clifford and len(list(g.neighbors(v)))==1:
-            n = list(g.neighbors(v))[0]
+        if non_clifford and len(g.neighbors(v))==1:
+            n = g.neighbors(v)[0]
             if not phase_is_pauli(phases[n]): continue # Not a real phase gadget (happens for scalar diagrams)
             if n in gadgets: continue # Not a real phase gadget (happens for scalar diagrams)
             if n in inputs or n in outputs: continue # Not a real phase gadget (happens for non-unitary diagrams)

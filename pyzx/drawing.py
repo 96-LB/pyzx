@@ -125,8 +125,8 @@ def arrange_scalar_diagram(g: BaseGraph[VT,ET]) -> None:
     min_row = 1000000
     rows_used: Dict[FloatInt, List[VT]] = dict()
     for v in g.vertices():
-        if len(list(g.neighbors(v))) == 1:
-            w = list(g.neighbors(v))[0]
+        if len(g.neighbors(v)) == 1:
+            w = g.neighbors(v)[0]
             gadgets[(v,w)] = 0
         elif all(g.vertex_degree(w) > 1 for w in g.neighbors(v)): # Not part of a phase gadget
             verts.append(v)
@@ -141,7 +141,7 @@ def arrange_scalar_diagram(g: BaseGraph[VT,ET]) -> None:
             else: g.set_qubit(v,qs[v]+1)
     
     for v,w in gadgets.keys():
-        score = sum(rs[n] for n in g.neighbors(w))/len(list(g.neighbors(w)))
+        score = sum(rs[n] for n in g.neighbors(w))/len(g.neighbors(w))
         gadgets[(v,w)] = score
     
     l = list(gadgets.items())

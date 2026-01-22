@@ -102,13 +102,13 @@ def alt_extract_circuit(
     outputs = g.outputs()
     for v in g.vertices():
         if g.vertex_degree(v) == 1 and v not in inputs and v not in outputs:
-            n = list(g.neighbors(v))[0]
+            n = g.neighbors(v)[0]
             gadgets[n] = v
     
     qubit_map: Dict[VT,int] = dict()
     frontier = []
     for i,o in enumerate(outputs):
-        v = list(g.neighbors(o))[0]
+        v = g.neighbors(o)[0]
         if v in inputs: continue
         frontier.append(v)
         qubit_map[v] = i
@@ -133,7 +133,7 @@ def alt_extract_circuit(
         # And now on to CZ gates
         cz_mat = Mat2([[0 for i in range(g.qubit_count())] for j in range(g.qubit_count())])
         for v in frontier:
-            for w in list(g.neighbors(v)):
+            for w in g.neighbors(v):
                 if w in frontier:
                     cz_mat.data[qubit_map[v]][qubit_map[w]] = 1
                     cz_mat.data[qubit_map[w]][qubit_map[v]] = 1

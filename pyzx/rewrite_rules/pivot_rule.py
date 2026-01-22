@@ -51,7 +51,7 @@ def boundary_list_for_vertex(
 ) -> Optional[List[VT]]:
     """Returns the list of boundary vertices for a given vertex."""
     types = g.types()
-    v0n = list(g.neighbors(v0))
+    v0n = g.neighbors(v0)
     v0b: List[VT] = []
     for n in v0n:
         if len(list(g.edges(v0,n))) != 1:
@@ -242,8 +242,8 @@ def match_pivot_gadget(
         if g.is_ground(v0):
             continue
 
-        v0n = list(g.neighbors(v0))
-        v1n = list(g.neighbors(v1))
+        v0n = g.neighbors(v0)
+        v1n = g.neighbors(v1)
         if len(v1n) == 1: continue # It is a phase gadget
         bad_match = False
         discard_edges: List[ET] = []

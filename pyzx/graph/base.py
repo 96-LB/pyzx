@@ -853,7 +853,7 @@ class BaseGraph(Generic[VT, ET], metaclass=DocstringMeta):
             if v in inputs or v in outputs: continue
             if self.vertex_degree(v) != 1:
                 raise TypeError("Invalid ZX-diagram: Boundary-type vertex does not have unique neighbor")
-            w = list(self.neighbors(v))[0]
+            w = self.neighbors(v)[0]
             if self.row(w) > self.row(v):
                 inputs.append(v)
             elif self.row(w) < self.row(v):
@@ -879,7 +879,7 @@ class BaseGraph(Generic[VT, ET], metaclass=DocstringMeta):
             self.set_row(i,0)
             self.set_qubit(i,q)
             #q = self.qubit(i)
-            n = list(self.neighbors(i))[0]
+            n = self.neighbors(i)[0]
             if self.type(n) in (VertexType.Z, VertexType.X):
                 claimed.append(n)
                 self.set_row(n,1)
@@ -896,7 +896,7 @@ class BaseGraph(Generic[VT, ET], metaclass=DocstringMeta):
             #q = self.qubit(o)
             self.set_row(o,max_r+1)
             self.set_qubit(o,q)
-            n = list(self.neighbors(o))[0]
+            n = self.neighbors(o)[0]
             if n not in claimed:
                 self.set_row(n,max_r)
                 self.set_qubit(n, q)
@@ -979,8 +979,8 @@ class BaseGraph(Generic[VT, ET], metaclass=DocstringMeta):
             if d == 1: # It has a unique neighbor
                 if v in rem: continue # Already taken care of
                 if self.type(v) == VertexType.BOUNDARY: continue # Ignore in/outputs
-                w = list(self.neighbors(v))[0]
-                if len(list(self.neighbors(w))) > 1: continue # But this neighbor has other neighbors
+                w = self.neighbors(v)[0]
+                if len(self.neighbors(w)) > 1: continue # But this neighbor has other neighbors
                 if self.type(w) == VertexType.BOUNDARY: continue # It's a state/effect
                 # At this point w and v are only connected to each other
                 rem.append(v)

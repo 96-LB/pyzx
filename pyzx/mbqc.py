@@ -71,7 +71,7 @@ def apply_pauli(g:BaseGraph, pos:Tuple[int,int], t:VertexType=VertexType.Z, phas
         if g.qubit(v) == q and g.row(v) == r:
             found = True
             if v in outputs:
-                ns = list(g.neighbors(v))
+                ns = g.neighbors(v)
                 if len(ns) == 1:
                     w = ns[0]
                     if t == g.type(w):

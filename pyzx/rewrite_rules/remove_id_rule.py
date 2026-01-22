@@ -76,7 +76,7 @@ def check_remove_zx(g: BaseGraph[VT,ET], v: VT) -> bool:
 
 def unsafe_remove_zx(g: BaseGraph[VT,ET], v: VT) -> bool:
     """Removes the identity spider v of type ZX"""
-    neighbors = list(g.neighbors(v))
+    neighbors = g.neighbors(v)
     if len(neighbors) == 2:
         v1, v2 = neighbors[0], neighbors[1]
     else: # self loop

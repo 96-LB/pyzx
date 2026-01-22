@@ -518,7 +518,7 @@ def tensorfy_rw_subtree(g: BaseGraph,
         vt = g.type(subtree)
         if vt == VertexType.BOUNDARY:
             et = g.edge_type(list(g.incident_edges(subtree))[0])
-            nb = list(g.neighbors(subtree))[0]
+            nb = g.neighbors(subtree)[0]
             nbt = g.type(nb)
             is_had = (et == EdgeType.SIMPLE) ^ (nbt == VertexType.BOUNDARY and nb < subtree)
             if is_had:

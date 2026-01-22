@@ -63,7 +63,7 @@ def check_lcomp(
 
     if not (all(g.edge_type(e) == EdgeType.HADAMARD for e in g.incident_edges(v))): return False
 
-    vn = list(g.neighbors(v))
+    vn = g.neighbors(v)
 
     if not all(types[n] == VertexType.Z for n in vn): return False
 
@@ -86,7 +86,7 @@ def unsafe_lcomp(g: BaseGraph[VT,ET], v: VT) -> bool:
     etab: Dict[Tuple[VT,VT],List[int]] = dict()
     rem: List[VT] = []
 
-    vn = list(g.neighbors(v))
+    vn = g.neighbors(v)
 
     a = g.phase(v)
     rem.append(v)

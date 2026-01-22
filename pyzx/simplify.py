@@ -593,7 +593,7 @@ def is_graph_like(g: BaseGraph[VT,ET], strict:bool=False) -> bool:
         # every I/O is connected to a Z-spider
         bs = [v for v in g.vertices() if g.type(v) == VertexType.BOUNDARY]
         for b in bs:
-            if g.vertex_degree(b) != 1 or g.type(list(g.neighbors(b))[0]) != VertexType.Z:
+            if g.vertex_degree(b) != 1 or g.type(g.neigbors(b)[0]) != VertexType.Z:
                 return False
 
         # every Z-spider is connected to at most one I/O
@@ -624,7 +624,7 @@ def to_graph_like(g: BaseGraph[VT,ET]) -> None:
             continue
 
         # have to connect the (boundary) vertex to a Z-spider
-        ns = list(g.neighbors(v))
+        ns = g.neighbors(v)
         for n in ns:
             # every neighbor is another boundary or an H-Box
             assert(g.type(n) in [VertexType.BOUNDARY, VertexType.H_BOX])
@@ -700,8 +700,8 @@ def to_clifford_normal_form_graph(g: BaseGraph[VT,ET]) -> None:
 
     inputs = list(g.inputs())
     outputs = list(g.outputs())
-    v_inputs = [list(g.neighbors(i))[0] for i in inputs] # input vertices should have a unique spider neighbor
-    v_outputs = [list(g.neighbors(o))[0] for o in outputs] # input vertices should have a unique spider neighbor
+    v_inputs = [g.neighbors(i)[0] for i in inputs] # input vertices should have a unique spider neighbor
+    v_outputs = [g.neighbors(o)[0] for o in outputs] # input vertices should have a unique spider neighbor
     # create more spacing
     for v in v_inputs:
         g.set_row(v, 3)
