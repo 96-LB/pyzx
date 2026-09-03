@@ -93,7 +93,6 @@ disallow_untyped_defs = true
 module = [
     "numpy.*",
     "networkx.*",
-    "pyquil.*",
     "matplotlib.*",
     "pandas.*",
     "ipywidgets.*",
