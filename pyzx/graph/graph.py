@@ -29,7 +29,7 @@ def Graph(backend: str | None = None) -> BaseGraph:
 	"""Returns an instance of an implementation of :class:`~pyzx.graph.base.BaseGraph`.
 	By default :class:`~pyzx.graph.graph_s.GraphS` is used.
 	Currently ``backend`` is allowed to be `simple` (for the default),
-	'multigraph' (for allowing parallel edges), or 'quizx-vec' (if QuiZX is installed).
+	`multigraph` (for allowing parallel edges), or `quizx-vec` (if QuiZX is installed).
 	This method is the preferred way to instantiate a ZX-diagram in PyZX.
 
 	Example:
