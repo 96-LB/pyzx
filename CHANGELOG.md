@@ -8,6 +8,9 @@ Hence, occasionally changes will be backwards incompatible (although they will a
 
 ## [Unreleased]
 
+### Removed
+- Support for the `graph_tool` and `igraph` backends has been officially dropped. (by @96-LB)
+
 ## [0.10.6] - 2026-09-01
 
 ### Fixed
