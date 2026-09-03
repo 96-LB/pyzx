@@ -95,7 +95,6 @@ module = [
     "igraph.*",
     "graph_tool.*",
     "networkx.*",
-    "pyquil.*",
     "matplotlib.*",
     "pandas.*",
     "ipywidgets.*",
