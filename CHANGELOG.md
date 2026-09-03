@@ -10,6 +10,7 @@ Hence, occasionally changes will be backwards incompatible (although they will a
 
 ### Removed
 - Support for the PyQuil compiler was dropped. Breaking changes include the removal of `PyQuilCircuit`, `Architecture.to_quil_device`, `CompileMode.QUIL_COMPILER`, and any related functionality in the scripts module. (by @96-LB)
+- Support for the `graph_tool` and `igraph` backends has been officially dropped. (by @96-LB)
 
 ## [0.10.6] - 2026-09-01
 
