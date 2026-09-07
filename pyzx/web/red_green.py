@@ -151,29 +151,30 @@ def _euler_expand_edges(g: BaseGraph[int, Tuple[int, int]]) -> Iterable[Expanded
         if g.type(v) != VertexType.H_BOX:
             continue
         
-        try:
-            v1, v2 = g.neighbors(v)
-        except ValueError:
+        neighbors = g.neighbors(v)
+        if len(neighbors) != 2:
             raise ValueError(f"Hadamard vertex {v} does not have exactly two neighbors.")
         
         if g.phase(v) != 0:
             raise ValueError(f"Hadamard vertex {v} has non-zero phase.")
         
+        v1, v2 = neighbors
         v1_edge_type = g.edge_type((v1, v))
         v2_edge_type = g.edge_type((v2, v))
 
         g.remove_vertex(v)
         g.add_edge((v1, v2))
 
-        flip = g.type(v1) == g.type(v2) and g.type(v1) == VertexType.X
+        flip = (g.type(v1) == g.type(v2) == VertexType.X)
         w1, w2, w3 = _decompose_between(v1, v2, flip)
         g.set_edge_type((v1, w1), v1_edge_type)
         g.set_edge_type((w3, v2), v2_edge_type)
 
         expanded_hadamards.append(ExpandedHadamard(w1, w2, w3, origin=v, flipped_decomposition=flip))
 
-    for v1, v2 in list(filter(lambda e: g.edge_type(e) == EdgeType.HADAMARD, g.edges())):
-        flip = g.type(v1) == g.type(v2) and g.type(v1) == VertexType.Z
+    hadamard_edges = (e for e in g.edges() if g.edge_type(e) == EdgeType.HADAMARD)
+    for v1, v2 in hadamard_edges:
+        flip = (g.type(v1) == g.type(v2) == VertexType.Z)
         w1, w2, w3 = _decompose_between(v1, v2, flip)
         expanded_hadamards.append(ExpandedHadamard(w1, w2, w3, origin=None, flipped_decomposition=flip))
 
