@@ -156,6 +156,9 @@ def _euler_expand_edges(g: BaseGraph[int, Tuple[int, int]]) -> Iterable[Expanded
         except ValueError:
             raise ValueError(f"Hadamard vertex {v} does not have exactly two neighbors.")
         
+        if g.phase(v) != 0:
+            raise ValueError(f"Hadamard vertex {v} has non-zero phase.")
+        
         v1_edge_type = g.edge_type((v1, v))
         v2_edge_type = g.edge_type((v2, v))
 
