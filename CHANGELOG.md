@@ -8,6 +8,9 @@ Hence, occasionally changes will be backwards incompatible (although they will a
 
 ## [Unreleased]
 
+### Fixed
+- Moved `RootHeuristic.RootHeuristicProtocol` and `SplitHeuristic.SplitHeuristicProtocol` to module level to fix a `DeprecationWarning` in Python 3.11+. Though these classes exist only for type annotations, this is technically a breaking change. (by @96-LB)
+
 ### Removed
 - Support for the PyQuil compiler was dropped. Breaking changes include the removal of `PyQuilCircuit`, `Architecture.to_quil_device`, `CompileMode.QUIL_COMPILER`, and any related functionality in the scripts module. (by @96-LB)
 - Support for the `graph_tool` and `igraph` backends has been officially dropped. (by @96-LB)
