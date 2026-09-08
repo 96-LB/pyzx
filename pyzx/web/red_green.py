@@ -150,14 +150,14 @@ def _euler_expand_edges(g: BaseGraph[int, Tuple[int, int]]) -> Iterable[Expanded
     for v in list(g.vertices()):
         if g.type(v) != VertexType.H_BOX:
             continue
-        
+
         neighbors = g.neighbors(v)
         if len(neighbors) != 2:
             raise ValueError(f"Hadamard vertex {v} does not have exactly two neighbors.")
-        
-        if g.phase(v) != 0:
-            raise ValueError(f"Hadamard vertex {v} has non-zero phase.")
-        
+
+        if g.phase(v) != 1:
+            raise ValueError(f"H-box vertex {v} has incorrect phase. Hadamard gates should have phase pi.")
+
         v1, v2 = neighbors
         v1_edge_type = g.edge_type((v1, v))
         v2_edge_type = g.edge_type((v2, v))
