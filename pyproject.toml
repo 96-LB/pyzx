@@ -77,17 +77,15 @@ warn_unused_configs = true
 [[tool.mypy.overrides]]
 module = [
     "pyzx.graph.*",
-    "pyzx.circuit.*"
+    "pyzx.circuit.*",
+    "pyzx.routing.*",
+    "pyzx.web.*"
 ]
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = "pyzx.optimize"
 ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = "pyzx.routing.*"
-disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = [
