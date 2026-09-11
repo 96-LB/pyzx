@@ -71,7 +71,7 @@ from pyzx.graph.base import BaseGraph, VT, ET
 from pyzx.utils import VertexType, EdgeType, is_pauli
 
 
-def _linear_sum_assignment_itertools(cost_matrix) -> tuple[list, list]:
+def _linear_sum_assignment_itertools(cost_matrix: list[list[float]]) -> tuple[list[int], list[int]]:
     rows = list(range(len(cost_matrix)))
     cols = list(range(len(cost_matrix[0]) if cost_matrix else 0))
 
@@ -235,7 +235,7 @@ def unsafe_unfuse_5_FE(g: BaseGraph[VT, ET], v: VT) -> bool:
     return _unsafe_unfuse_spider(g, v, lambda x, y: _get_n_cycle_coords(5, x, y))
 
 def check_unfuse_n_2FE(g: BaseGraph[VT, ET], v: VT) -> bool:
-    return g.type(v) in (VertexType.X, VertexType.Z) and g.phase(v) == 0 
+    return g.type(v) in (VertexType.X, VertexType.Z) and g.phase(v) == 0
 
 def unfuse_n_2FE(g: BaseGraph[VT, ET], v: VT) -> bool:
     """Unfuses a degree-n spider into a n-sided polygon"""

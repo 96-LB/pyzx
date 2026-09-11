@@ -269,12 +269,17 @@ def unsafe_bialgebra_op(g: BaseGraph[VT,ET],
                     neighbors.append((neighbor, g.edge_type(edge)))
         return neighbors, loops
 
-    def add_vertex_with_averages(vertices, g, vtype):
+    def add_vertex_with_averages(vertices: list[VT], g: BaseGraph[VT, ET], vtype: VertexType) -> VT:
         average_row = sum(g.row(v) for v in vertices) / len(vertices)
         average_qubit = sum(g.qubit(v) for v in vertices) / len(vertices)
         return g.add_vertex(vtype, average_qubit, average_row)
 
-    def update_etab(etab, new_vertex, neighbors, loops):
+    def update_etab(
+        etab: dict[tuple[VT, VT], list[int]],
+        new_vertex: VT,
+        neighbors: list[tuple[VT, EdgeType]],
+        loops: list[EdgeType]
+    ) -> None:
         for n, et in neighbors + [(new_vertex, et) for et in loops]:
             etab[upair(new_vertex, n)][0 if et == EdgeType.SIMPLE else 1] += 1
 

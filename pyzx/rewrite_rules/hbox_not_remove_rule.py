@@ -34,7 +34,7 @@ from pyzx.utils import EdgeType, VertexType, is_standard_hbox
 from pyzx.graph.base import BaseGraph, ET, VT, upair
 
 
-def is_NOT_gate(g, v, n1, n2):
+def is_NOT_gate(g: BaseGraph[VT, ET], v: VT, n1: VT, n2: VT) -> bool:
     """Returns whether the vertex v in graph g is a NOT gate between its neighbours n1 and n2."""
     return (
         (
@@ -49,11 +49,7 @@ def is_NOT_gate(g, v, n1, n2):
     )
 
 
-def check_hbox_parallel_not(
-        g: BaseGraph[VT,ET],
-        h: VT,
-        n: VT
-        ) -> bool:
+def check_hbox_parallel_not(g: BaseGraph[VT,ET], h: VT, n: VT) -> bool:
     """Finds H-boxes that are connected to a Z-spider both directly and via a NOT.
     :param g: Graph to check.
     :param h: H-box to check.
